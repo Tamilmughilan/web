@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Web Stock Maintenance Portal">
+  <meta name="author" content="Your Name">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Stock Maintenance</title>
+
+  <!-- Internal CSS (CSS2 + CSS3 Features) -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#f0f0f0, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    header, nav, section, article, footer {
+      padding: 20px;
+      margin: 10px;
+      border-radius: 10px;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #eee;
+    }
+
+    nav a {
+      margin: 10px;
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+
+    section {
+      background-color: #fafafa;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+    }
+
+    .highlight {
+      border: 2px dashed #666;
+      padding: 10px;
+      background-color: #f9f9f9;
+      margin-top: 10px;
+    }
+
+    /* CSS3 Animation */
+    .animated-box {
+      width: 100px;
+      height: 100px;
+      background-color: coral;
+      animation: moveBox 4s infinite alternate;
+      margin: 10px auto;
+    }
+
+    @keyframes moveBox {
+      from {transform: translateX(0);}
+      to {transform: translateX(200px);}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HTML5 Semantic Tag: Header -->
+<header>
+  <h1>🛒 Web Stock Maintenance</h1>
+  <p>Maintain your product, purchase, sales and stock details</p>
+</header>
+
+<!-- HTML4: Navigation with Internal Hyperlinking -->
+<nav>
+  <a href="#product">Product Details</a>
+  <a href="#purchase">Purchase</a>
+  <a href="#sales">Sales</a>
+  <a href="#stock">Stock</a>
+  <a href="#media">Multimedia</a>
+  <a href="#graphics">Graphics</a>
+  <a href="#geo">Geolocation</a>
+</nav>
+
+<!-- HTML5 Sectioning -->
+<section id="product">
+  <h2>Product Details</h2>
+  <ul>
+    <li>Product Code</li>
+    <li>Product Name</li>
+    <li>Opening Stock</li>
+    <li>Price</li>
+  </ul>
+  <img src="https://via.placeholder.com/150" alt="Product Image">
+</section>
+
+<section id="purchase">
+  <h2>Purchase Details</h2>
+  <p>Includes stock, quantity and price of purchased items.</p>
+  <!-- HTML4 Table -->
+  <table border="1" cellpadding="5">
+    <tr><th>Product</th><th>Quantity</th><th>Price</th></tr>
+    <tr><td>Keyboard</td><td>20</td><td>500</td></tr>
+    <tr><td>Mouse</td><td>30</td><td>250</td></tr>
+  </table>
+</section>
+
+<section id="sales">
+  <h2>Sales Details</h2>
+  <!-- HTML4 Form -->
+  <form>
+    <label>Customer Name:</label><input type="text"><br><br>
+    <label>Product Code:</label><input type="text"><br><br>
+    <label>Quantity:</label><input type="number"><br><br>
+    <label>Price:</label><input type="text"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+</section>
+
+<section id="stock">
+  <h2>Stock Details</h2>
+  <ol>
+    <li>Product ID</li>
+    <li>Opening Stock</li>
+    <li>Purchase Stock</li>
+    <li>Sales Stock</li>
+    <li>Current Stock</li>
+  </ol>
+
+  <!-- CSS3 Animation -->
+  <div class="animated-box"></div>
+</section>
+
+<section id="media">
+  <h2>Media Integration</h2>
+
+  <!-- HTML5 Video -->
+  <h3>Product Promo Video</h3>
+  <video width="320" height="240" controls>
+    <source src="movie.mp4" type="video/mp4">
+    <source src="movie.ogg" type="video/ogg">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- HTML5 Audio -->
+  <h3>Customer Testimonial Audio</h3>
+  <audio controls>
+    <source src="horse.mp3" type="audio/mpeg">
+    <source src="horse.ogg" type="audio/ogg">
+    Your browser does not support the audio element.
+  </audio>
+</section>
+
+<section id="graphics">
+  <h2>Graphics</h2>
+
+  <!-- HTML5 Canvas -->
+  <h3>Canvas Drawing</h3>
+  <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+  <script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#FF0000";
+    ctx.fillRect(10, 10, 50, 80);
+  </script>
+
+  <!-- SVG Graphic -->
+  <h3>SVG Circle</h3>
+  <svg width="100" height="100">
+    <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="red" />
+  </svg>
+</section>
+
+<section id="geo">
+  <h2>Geolocation</h2>
+  <p>Click the button to get your coordinates:</p>
+  <button onclick="getLocation()">Try It</button>
+  <p id="demo"></p>
+
+  <script>
+    var x = document.getElementById("demo");
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+    }
+  </script>
+</section>
+
+<!-- HTML5 Footer -->
+<footer>
+  <p>&copy; 2024 Web Stock Maintenance System</p>
+</footer>
+
+</body>
+</html>

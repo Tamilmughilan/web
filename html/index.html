@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Payment Form</h2>
+    <form id="paymentForm">
+        <label>Name on Card : </label><br />
+        <input type="text" id="name" /><div id="nameError" class="error"></div><br>
+
+        <label>Credit Card Number : </label><br>
+        <input type="text"  id="ccnum" maxlength="16"><div id="ccError" class="error"></div><br>
+
+        <label>CVV : </label><br>
+        <input type="text"  id="ccnum" maxlength="3"><div id="cvvError" class="error"></div><br>
+        
+        <label>Expiry Date:</label><br>
+        <select id="expMonth"></select>
+        <select id="expYea"></select>
+        <div id="expError" class="error"></div><br>
+
+        <button type="submit">Submit</button>
+        <div id="result"></div>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
