@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX User Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .user-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .loading {
+      display: none;
+      color: #666;
+    }
+    .error {
+      color: red;
+      display: none;
+    }
+    button {
+      padding: 8px 16px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>User Dashboard</h1>
+  
+  <!-- User List Section -->
+  <section id="user-section">
+    <h2>Users</h2>
+    <button id="load-users">Load Users</button>
+    <div id="loading-users" class="loading">Loading users...</div>
+    <div id="error-users" class="error">Failed to load users.</div>
+    <div id="user-list"></div>
+  </section>
+  
+  <!-- Add User Form -->
+  <section id="add-user-section">
+    <h2>Add New User</h2>
+    <form id="add-user-form">
+      <input type="text" id="name" placeholder="Name" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <textarea id="bio" placeholder="Bio"></textarea>
+      <button type="submit">Add User</button>
+    </form>
+    <div id="loading-add" class="loading">Adding user...</div>
+    <div id="error-add" class="error">Failed to add user.</div>
+    <div id="success-message"></div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // DOM elements
+      const loadUsersBtn = document.getElementById('load-users');
+      const userList = document.getElementById('user-list');
+      const loadingUsers = document.getElementById('loading-users');
+      const errorUsers = document.getElementById('error-users');
+      const addUserForm = document.getElementById('add-user-form');
+      const loadingAdd = document.getElementById('loading-add');
+      const errorAdd = document.getElementById('error-add');
+      const successMessage = document.getElementById('success-message');
+      
+      // API endpoint (replace with your actual API)
+      const API_URL = 'https://jsonplaceholder.typicode.com/users';
+      
+      // Load users function
+      function loadUsers() {
+        // Clear previous results
+        userList.innerHTML = '';
+        errorUsers.style.display = 'none';
+        loadingUsers.style.display = 'block';
+        
+        fetch(API_URL)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(users => {
+            loadingUsers.style.display = 'none';
+            
+            // Display each user
+            users.forEach(user => {
+              const userCard = document.createElement('div');
+              userCard.className = 'user-card';
+              userCard.innerHTML = `
+                <h3>${user.name}</h3>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Phone:</strong> ${user.phone}</p>
+                <p><strong>Company:</strong> ${user.company.name}</p>
+              `;
+              userList.appendChild(userCard);
+            });
+          })
+          .catch(error => {
+            loadingUsers.style.display = 'none';
+            errorUsers.style.display = 'block';
+            console.error('Error fetching users:', error);
+          });
+      }
+      
+      // Add user function
+      function addUser(event) {
+        event.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const bio = document.getElementById('bio').value;
+        
+        // Clear previous messages
+        errorAdd.style.display = 'none';
+        successMessage.textContent = '';
+        loadingAdd.style.display = 'block';
+        
+        // Create user object
+        const newUser = {
+          name: name,
+          email: email,
+          bio: bio
+        };
+        
+        // Send POST request
+        fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newUser)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            loadingAdd.style.display = 'none';
+            successMessage.textContent = `User ${data.name} added successfully with ID: ${data.id}`;
+            addUserForm.reset();
+            
+            // Add the new user to the list if it's already loaded
+            if (userList.children.length > 0) {
+              const userCard = document.createElement('div');
+              userCard.className = 'user-card';
+              userCard.innerHTML = `
+                <h3>${data.name}</h3>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Bio:</strong> ${data.bio}</p>
+                <p><em>Just added</em></p>
+              `;
+              userList.prepend(userCard);
+            }
+          })
+          .catch(error => {
+            loadingAdd.style.display = 'none';
+            errorAdd.style.display = 'block';
+            console.error('Error adding user:', error);
+          });
+      }
+      
+      // Event listeners
+      loadUsersBtn.addEventListener('click', loadUsers);
+      addUserForm.addEventListener('submit', addUser);
+    });
+  </script>
+</body>
+</html>
